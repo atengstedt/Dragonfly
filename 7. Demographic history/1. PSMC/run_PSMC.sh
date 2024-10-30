@@ -63,7 +63,7 @@ done
 
 #----------Plot PSMC with outgroup, bin size 100 (default) and point estimate mutation rate (R)
 setwd("PSMC")
-source("plot.r")
+source("plot_PSMC.r")
 
 #read popmap
 popmap<-read.table("popmap2_region.txt",sep="\t",stringsAsFactors=F)
