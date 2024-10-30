@@ -37,7 +37,7 @@ done
 #----------Identify best number of K
 grep -h CV log*.out>cross_validation2.txt
 
-#plot cross validation
+#plot cross validation (R)
 library(stringr)
 library(ggplot2)
 library(dplyr)
