@@ -29,7 +29,7 @@ sbatch -A Coregonus -t 12:00:00 --job-name calc_r2 --wrap\
 folder="/faststorage/project/Coregonus/Aja/Dragonfly/LD-decay/"
 
 sbatch -A Coregonus -t 12:00:00 --mem 164G --job-name rscript --wrap\
- "Rscript ${folder}/plot.R ${folder}/Contig9961.NEZ2023.maf0.15.hap.ld ${folder}/Contig9961.NEZ2023.maf0.15.tiff"
+ "Rscript ${folder}/plot_LD.R ${folder}/Contig9961.NEZ2023.maf0.15.hap.ld ${folder}/Contig9961.NEZ2023.maf0.15.tiff"
 
 #============Remove sites with missing data and thin VCF so no sites are within <0.28 Mb from each other, at which point LD has decayed to 0.1
 folder="/faststorage/project/Coregonus/Aja/Dragonfly/VCF/"
