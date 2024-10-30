@@ -68,7 +68,7 @@ sbatch -A Coregonus -t 12:00:00 --job-name vcf.sh --wrap\
 #8,995,078 SNPs (Dragonfly 2 with reference individual)
 
 #===========Reheader (names are originally shown as e.g. mem/P192139_purged.bam and I want it to just be P192139)
-file="/faststorage/project/Coregonus/Aja/Dragonfly/individuals2.txt"
+file="/faststorage/project/Coregonus/Aja/Dragonfly/individuals2.txt" #important: individuals needs to be listed in the exact order they occur in the VCF
 input="/faststorage/project/Coregonus/Aja/Dragonfly/VCF/Dragonfly2_filtered.recode.vcf"
 output="/faststorage/project/Coregonus/Aja/Dragonfly/VCF/Dragonfly2_filtered.reheader.vcf"
 
