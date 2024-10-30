@@ -47,7 +47,7 @@ mv "/faststorage/project/Coregonus/Aja/Dragonfly/repeatmasking/library/RepeatMod
 mv "/faststorage/project/Coregonus/Aja/Dragonfly/repeatmasking/library/RepeatModelerDB/AesVir_Aeshna-viridis-families.stk" "/faststorage/project/Coregonus/Aja/Dragonfly/repeatmasking/repeatmodeler/"
 mv "/faststorage/project/Coregonus/Aja/Dragonfly/repeatmasking/library/RepeatModelerDB/AesVir_Aeshna-viridis-rmod.log" "/faststorage/project/Coregonus/Aja/Dragonfly/repeatmasking/repeatmodeler/"
 
-#add species code to outputted fasta file
+#add species code to output fasta file
 cat ./AesVir_Aeshna-viridis-families.fa | \
 seqkit fx2tab | \
 awk '{ print "EupAur_"$0 }' | \
@@ -82,10 +82,6 @@ sbatch -A Coregonus -t 12:00:00 --job-name RepeatMasker --mem 50G -c 16 --wrap\
 ### 3. Run RepeatMasker on Assembly using RepeatModeler data
 sbatch -A Coregonus -t 12:00:00 --job-name RepeatMasker --mem 50G -c 16 --wrap\
  "RepeatMasker -e rmblast -pa 8 -dir /faststorage/project/Coregonus/Aja/Dragonfly/repeatmasking/repeatmasker/RepModRun/ -xsmall -lib /faststorage/project/Coregonus/Aja/Dragonfly/repeatmasking/repeatmodeler/AesVir_Aeshna-viridis-families.prefix.fa /faststorage/project/Coregonus/Aja/Dragonfly/repeatmasking/repeatmasker/RepBaseRun/dragonfly.contig.fa.masked"
-
-
-
-
 
 #make GFF 3 of repeat regions from RepeatMasker output file
 "/faststorage/project/Coregonus/Aja/Butterflies/assembly/repeatMasking/rm2gff3.sh" "/faststorage/project/Coregonus/Aja/Dragonfly/repeatmasking/repeatmasker/RepModRun/dragonfly.contig.fa.masked.out" > "/faststorage/project/Coregonus/Aja/Dragonfly/repeatmasking/repeatmasker/RepModRun/AesVir_genomic.repeats_giri.gff"
