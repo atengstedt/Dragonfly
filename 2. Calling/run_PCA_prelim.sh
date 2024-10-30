@@ -26,7 +26,7 @@ sbatch -A Eels -t 1:00:00 --job-name line_count --wrap \
 
 ### PCA (R)
 f.vcf<-"/faststorage/project/Coregonus/Aja/Dragonfly/PCA_prelim/Dragonfly2_filtered.minGQ20.minDP6.maxDP45.HWE6.miss1.subset0.05.vcf"	# Give the absolute pathname of the VCF subset.
-f.popmap<-"/faststorage/project/Coregonus/Aja/Dragonfly/PCA_prelim/popmap_region.txt"	# Give the absolute pathname of the popmap file.
+f.popmap<-"/faststorage/project/Coregonus/Aja/Dragonfly/PCA_prelim/popmap2_region.txt"	# Give the absolute pathname of the popmap file.
 #popmap file contains individual names in column 1 (in the same order as they appear in the VCF!) and population name in column 2.
 
 #-----------Read the input files.
