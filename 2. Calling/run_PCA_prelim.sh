@@ -13,8 +13,6 @@ folder="/faststorage/project/Coregonus/Aja/Dragonfly/"
 
 sbatch -A Coregonus -t 12:00:00 --mem 8G --job-name vcftools --wrap\
  "vcftools --gzvcf ${folder}/VCF/Dragonfly2_filtered.minGQ20.minDP6.maxDP45.HWE6.vcf.gz --max-missing 1 --recode --recode-INFO-all --out ${folder}/PCA_prelim/Dragonfly2_filtered.minGQ20.minDP6.maxDP45.HWE6.miss1"
-  
-#4,738,751 SNPs
 
 #create random subset of VCF file to reduce computation time
 sbatch -A Eels -t 1:00:00 --job-name subset --wrap \
@@ -25,9 +23,7 @@ file="/faststorage/project/Coregonus/Aja/Dragonfly/PCA_prelim/Dragonfly2_filtere
 
 sbatch -A Eels -t 1:00:00 --job-name line_count --wrap \
  "bcftools view -H ${file} | wc -l"
- 
-#95,649 SNPs (approx. 5% of original data set with no missing data)
- 
+
 ### PCA (R)
 f.vcf<-"/faststorage/project/Coregonus/Aja/Dragonfly/PCA_prelim/Dragonfly2_filtered.minGQ20.minDP6.maxDP45.HWE6.miss1.subset0.05.vcf"	# Give the absolute pathname of the VCF subset.
 f.popmap<-"/faststorage/project/Coregonus/Aja/Dragonfly/PCA_prelim/popmap_region.txt"	# Give the absolute pathname of the popmap file.
