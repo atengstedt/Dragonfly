@@ -50,14 +50,14 @@ sbatch -A Coregonus -t 24:00:00 --mem 42G -c 8 --job-name TreeMix_step1 --wrap \
 #conda environment TreeMix
 
 #Final runs with optimum number of migration edges
-input="/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/Dragonfly_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.miss1.LD-thinned.recode.treemix.frq.gz"
+input="/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/Dragonfly2_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.miss1.LD-thinned.recode.treemix.frq.gz"
 
-cd "/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot_k100_bs500_m1-10_rep10/"
+cd "/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot2_k100_bs500_m1-10_rep10/"
 
 #1 migration event
 #sbatch -A Coregonus -t 48:00:00 --mem 25G -c 8 --job-name TreeMix_step3 --wrap \
 # "sh ../Step3_TreeMix.sh ${input} 8 100 noRoot 500 1 mytree 10 mytree2_constree.newick consense"
-#mv "/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot_k100_bs500_m1-10_rep10/final_runs/" "/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot_k100_bs500_m1-10_rep10/final_runs_m1/"
+#mv "/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot2_k100_bs500_m1-10_rep10/final_runs/" "/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot2_k100_bs500_m1-10_rep10/final_runs_m1/"
 
 #2 migration events
 sbatch -A Coregonus -t 48:00:00 --mem 25G -c 8 --job-name TreeMix_step3 --wrap \
