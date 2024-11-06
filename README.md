@@ -9,10 +9,4 @@ For example, in the folder "1. Mapping", there are two files:
 - STATS.r, a small "helper script", which is used in an analysis detailed in the run_mapping.sh file to obtain mapping statistics.
 
 Note that all run_<analysis_name>.sh-files contain a function to check job info in batch, which can be used at will, when wanting the check the status of multiple jobs:
-##########################
-# Check job info in batch.
-for id in `ls *.out | cut -d "-" -f 2 | cut -d "." -f 1`
-do
-jobinfo $id | grep State
-done | sort | uniq -c
-##########################
+
