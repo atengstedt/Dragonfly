@@ -1,3 +1,5 @@
+#custom version of the plot_Runs function from the detectRUNS R package: https://github.com/bioinformatics-ptp/detectRUNS
+
 plot_Runs_custom <- function(runs, suppressInds=FALSE, savePlots=FALSE, separatePlots=FALSE, outputName=NULL) {
 
   # avoid notes
