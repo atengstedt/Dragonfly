@@ -42,7 +42,7 @@ output="/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot2_
 mkdir ${output}
 cd ${output}
 
-sbatch -A Coregonus -t 12:00:00 --mem 8G -c 2 --job-name TreeMix_step1 --wrap \
+sbatch -A Coregonus -t 12:00:00 --mem 16G -c 2 --job-name TreeMix_step1 --wrap \
  "sh ../Step1_TreeMix.sh ${input} 2 100 noRoot 500 consense mytree 1 10 10"
 
 #Test migration edges with OptM
@@ -54,31 +54,16 @@ input="/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/Dragonfly
 
 cd "/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot2_k100_bs500_m1-10_rep10/"
 
-#1 migration event
-#sbatch -A Coregonus -t 48:00:00 --mem 25G -c 8 --job-name TreeMix_step3 --wrap \
-# "sh ../Step3_TreeMix.sh ${input} 8 100 noRoot 500 1 mytree 10 mytree2_constree.newick consense"
-#mv "/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot2_k100_bs500_m1-10_rep10/final_runs/" "/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot2_k100_bs500_m1-10_rep10/final_runs_m1/"
-
 #2 migration events
-sbatch -A Coregonus -t 48:00:00 --mem 8G -c 2 --job-name TreeMix_step3 --wrap \
- "sh ../Step3_TreeMix.sh ${input} 2 100 noRoot 500 2 mytree 10 mytree2_constree.newick consense"
+sbatch -A Coregonus -t 24:00:00 --mem 8G -c 2 --job-name TreeMix_step3 --wrap \
+ "sh ../Step3_TreeMix.sh ${input} 2 100 noRoot 500 2 mytree 10 mytree_constree.newick consense"
 
 #Tree visualization + Migration stats and support
 #run part B of Step2+4_TreeMix.R
 #conda environment TreeMix
 
-
 #calculate variance explained (R)
-Rscript "/faststorage/project/Coregonus/Aja/Coregonus/WGS/treemix/VarianceExplained.R" mytree_1m_finalrun_1
-
-#1 migration event
-#Standard error for all entries in the covariance matrix estimated from the data 0.000465826510204082
-#Variance of relatedness between populations explained by the model      0.980932712095605
-
 Rscript "/faststorage/project/Coregonus/Aja/Coregonus/WGS/treemix/VarianceExplained.R" mytree_2m_finalrun_1
+#Standard error for all entries in the covariance matrix estimated from the data 0.000459475469387755
+#Variance of relatedness between populations explained by the model      0.993510948706941
 
-#2 migration events
-#Standard error for all entries in the covariance matrix estimated from the data 0.000465826510204082
-#Variance of relatedness between populations explained by the model      0.991050664326613
-
-             
