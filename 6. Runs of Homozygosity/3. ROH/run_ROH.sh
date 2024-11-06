@@ -20,30 +20,26 @@ output="/faststorage/project/Coregonus/Aja/Dragonfly/VCF/Dragonfly2_filtered.min
 
 sbatch -A Coregonus -t 12:00:00 --mem 8G --job-name bcftools --wrap\
  "bcftools view -R $list $input -O v -o $output"
- 
-#2,750,262 SNPs out of 7,724,101
+
 #2,768,393 SNPs out of 7,790,422 (Dragonfly2 with reference individual)
 
 #===========Discard low mappability regions
 sbatch -A Coregonus -t 12:00:00 --wrap\
  "vcftools --vcf /faststorage/project/Coregonus/Aja/Dragonfly/VCF/Dragonfly2_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.vcf --exclude-bed /faststorage/project/Coregonus/Aja/Dragonfly/GenMap/dragonfly.contig.genmap.merged.bed --recode --recode-INFO-all --out /faststorage/project/Coregonus/Aja/Dragonfly/VCF/Dragonfly2_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.MappabilityMask"
 
-#2,424,500 SNPs
 #2,437,876 SNPs (Dragonfly2 with reference individual)
 
 #===========Discard repetitive regions
 sbatch -A Coregonus -t 12:00:00 --wrap\
  "vcftools --vcf /faststorage/project/Coregonus/Aja/Dragonfly/VCF/Dragonfly2_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.MappabilityMask.recode.vcf --exclude-bed /faststorage/project/Coregonus/Aja/Dragonfly/repeatmasking/AesVir_genomic.repeats.merged.bed --recode --recode-INFO-all --out /faststorage/project/Coregonus/Aja/Dragonfly/VCF/Dragonfly2_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.MappabilityMask.RepeatMask"
- 
-#1,628,513 SNPs
+
 #1,636,441 SNPs (Dragonfly2 with reference individual)
 
 #==========Remove sites with missing data
 sbatch -A Coregonus -t 12:00:00 --wrap\
  "vcftools --vcf /faststorage/project/Coregonus/Aja/Dragonfly/VCF/Dragonfly2_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.MappabilityMask.RepeatMask.recode.vcf --max-missing 1 --recode --recode-INFO-all --out /faststorage/project/Coregonus/Aja/Dragonfly/VCF/Dragonfly2_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.MappabilityMask.RepeatMask.miss1"
  
-#1,121,350 SNPs (length of 100 scaffolds = 566 Mb, so approx 1 SNP per 500 bp)
-#1,117,911 SNPs (Dragonfly2 with reference individual)
+#1,117,911 SNPs (Dragonfly2 with reference individual) (length of 100 scaffolds = 566 Mb, so approx 1 SNP per 500 bp)
 
 #--------------convert VCF to ped/map
 file="/faststorage/project/Coregonus/Aja/Dragonfly/VCF/Dragonfly2_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.MappabilityMask.RepeatMask.miss1.recode.vcf"
