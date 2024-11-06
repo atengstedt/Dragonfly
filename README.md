@@ -8,5 +8,5 @@ For example, in the folder "1. Mapping", there are two files:
 - run_mapping.sh, which describes the overall procedure for mapping of reads.
 - STATS.r, a small "helper script", which is used in an analysis detailed in the run_mapping.sh file to obtain mapping statistics.
 
-Note that all run_<analysis_name>.sh-files contain a function to check job info in batch, which can be used at will, when wanting the check the status of multiple jobs:
+Note that all run_<analysis_name>.sh-files contain a function to check job info in batch, which can be used at will, when wanting the check the status of multiple jobs.
 
