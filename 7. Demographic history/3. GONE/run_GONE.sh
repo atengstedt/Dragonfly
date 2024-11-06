@@ -27,7 +27,7 @@ sbatch -A Coregonus -t 12:00:00 --mem 8G --wrap\
 #=========split vcf by population and keep only variant sites with no missing sites for each
 folder="/faststorage/project/Coregonus/Aja/Dragonfly/GONE/"
 
-for population in NEZALL B2018 NEZ2018 NEZ2023 NWJ2021 SJ2021
+for population in NEZALL SJALL #B2018 NEZ2018 NEZ2023 NWJ2021 SJ2021
 do
 
 mkdir $folder/$population
@@ -37,23 +37,23 @@ sbatch -A Coregonus -t 12:00:00 --wrap\
 done
 
 #=========convert to ped/map format
-ID_file="/faststorage/project/Coregonus/Aja/Dragonfly/plink/FID.txt"
+ID_file="/faststorage/project/Coregonus/Aja/Dragonfly/plink/FID2.txt"
 folder="/faststorage/project/Coregonus/Aja/Dragonfly/GONE/"
 
-for population in NEZALL B2018 NEZ2018 NEZ2023 NWJ2021 SJ2021
+for population in NEZALL SJALL #B2018 NEZ2018 NEZ2023 NWJ2021 SJ2021
 do
 sbatch -A Coregonus -t 12:00:00 --mem 8G --job-name conv_pedmap --wrap\
  "plink --vcf ${folder}/${population}/${population}_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.miss1.mac1.recode.vcf --const-fid --allow-extra-chr --update-ids $ID_file --recode --out ${folder}/${population}/${population}_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.miss1.mac1"
 done
 
 #remove prefix from scaffold names
-for population in NEZALL B2018 NEZ2018 NEZ2023 NWJ2021 SJ2021
+for population in NEZALL SJALL #B2018 NEZ2018 NEZ2023 NWJ2021 SJ2021
 do
 sed -i 's/Contig//g' /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${population}/${population}_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.miss1.mac1.map
 done
 
 #remove unnecessary files
-for population in NEZALL B2018 NEZ2018 NEZ2023 NWJ2021 SJ2021
+for population in NEZALL #B2018 NEZ2018 NEZ2023 NWJ2021 SJ2021
 do
 rm /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${population}/*.log
 rm /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${population}/*.nosex
@@ -63,7 +63,7 @@ done
 programme="/faststorage/home/anbt/software/GONE-master/Linux/"
 folder="/faststorage/project/Coregonus/Aja/Dragonfly/GONE"
 
-for population in NEZALL B2018 NEZ2018 NEZ2023 NWJ2021 SJ2021
+for population in NEZALL SJALL #B2018 NEZ2018 NEZ2023 NWJ2021 SJ2021
 do
 mkdir $folder/$population/GONE_hc0.05_7.37cM
 cd $folder/$population/GONE_hc0.05_7.37cM
@@ -77,9 +77,95 @@ sbatch -A Coregonus -t 12:00:00 --mem 8G -c 16 --job-name GONE --wrap\
 done
 
 #remove temporary files
-for pop in NEZALL B2018 NEZ2018 NEZ2023 NWJ2021 SJ2021
+for pop in NEZALL SJALL B2018 NEZ2018 NEZ2023 NWJ2021 SJ2021
 do
 rm -r /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${pop}/GONE*/PROGRAMMES
 rm -r /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${pop}/GONE*/TEMPORARY_FILES
 rm /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${pop}/GONE*/script_GONE.sh
+rm /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${pop}/GONE*/seedfile
+rm /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${pop}/GONE*/timefile
+done
+
+
+
+###Jackknifing
+#=========For each population, iterate over a list of individuals and produce a VCF without that individual
+folder="/faststorage/project/Coregonus/Aja/Dragonfly/GONE/"
+
+for population in NEZALL SJALL
+do
+awk '{print $1}' ${folder}/${population}.txt | while read -r line   #read only first item in line
+do
+mkdir ${folder}/${population}/${line}
+sbatch -A Coregonus -t 12:00:00 --wrap\
+ "vcftools --vcf $folder/${population}/${population}_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.miss1.mac1.recode.vcf --remove-indv $line --recode --recode-INFO-all --out $folder/${population}/${line}/${population}_${line}_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.miss1.mac1"
+done
+done
+
+#=========convert to ped/map format
+ID_file="/faststorage/project/Coregonus/Aja/Dragonfly/plink/FID2.txt"
+folder="/faststorage/project/Coregonus/Aja/Dragonfly/GONE/"
+
+for population in NEZALL SJALL 
+do
+awk '{print $1}' ${folder}/${population}.txt | while read -r line   #read only first item in line
+do
+sbatch -A Coregonus -t 12:00:00 --mem 8G --job-name conv_pedmap --wrap\
+ "plink --vcf $folder/${population}/${line}/${population}_${line}_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.miss1.mac1.recode.vcf --const-fid --allow-extra-chr --update-ids $ID_file --recode --out $folder/${population}/${line}/${population}_${line}_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.miss1.mac1"
+done
+done
+
+#remove prefix from scaffold names
+folder="/faststorage/project/Coregonus/Aja/Dragonfly/GONE/"
+
+for population in NEZALL SJALL
+do
+awk '{print $1}' ${folder}/${population}.txt | while read -r line   #read only first item in line
+do
+sed -i 's/Contig//g' $folder/${population}/${line}/${population}_${line}_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.miss1.mac1.map
+done
+done
+
+#remove unnecessary files
+folder="/faststorage/project/Coregonus/Aja/Dragonfly/GONE/"
+
+for population in NEZALL SJALL
+do
+awk '{print $1}' ${folder}/${population}.txt | while read -r line   #read only first item in line
+do
+rm /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${population}/${line}/*.log
+rm /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${population}/${line}/*.nosex
+done
+done
+
+#=========run GONE for each population
+programme="/faststorage/home/anbt/software/GONE-master/Linux/"
+folder="/faststorage/project/Coregonus/Aja/Dragonfly/GONE"
+
+for population in NEZALL SJALL
+do
+awk '{print $1}' ${folder}/${population}.txt | while read -r line   #read only first item in line
+do
+mkdir $folder/$population/${line}/GONE_hc0.05_7.37cM
+cd $folder/$population/${line}/GONE_hc0.05_7.37cM
+
+cp -r $programme/* .
+cp $folder/${population}/${line}/${population}_${line}_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.miss1.mac1.map .
+cp $folder/${population}/${line}/${population}_${line}_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.miss1.mac1.ped .
+
+sbatch -A Coregonus -t 12:00:00 --mem 8G -c 16 --job-name GONE --wrap\
+ "bash script_GONE.sh ${population}_${line}_filtered.minGQ20.minDP6.maxDP45.HWE6.noSexChr.100longest.miss1.mac1"
+done
+done
+
+#remove temporary files
+for pop in NEZALL SJALL 
+do
+awk '{print $1}' ${folder}/${pop}.txt | while read -r line   #read only first item in line
+do
+rm -r /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${pop}/${line}/GONE*/PROGRAMMES
+rm -r /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${pop}/${line}/GONE*/TEMPORARY_FILES
+rm /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${pop}/${line}/GONE*/script_GONE.sh
+rm /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${pop}/${line}/GONE*/seedfile
+rm /faststorage/project/Coregonus/Aja/Dragonfly/GONE/${pop}/${line}/GONE*/timefile
 done
