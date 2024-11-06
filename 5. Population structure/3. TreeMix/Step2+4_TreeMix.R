@@ -38,33 +38,6 @@ source("/faststorage/project/Coregonus/Aja/Coregonus/WGS/treemix/BITE/R/treemix_
 source("/faststorage/project/Coregonus/Aja/Coregonus/WGS/treemix/BITE/R/plotting_funcs_bite.R")
 source("/faststorage/project/Coregonus/Aja/Coregonus/WGS/treemix/BITE/R/newick_split.R")
 
-png(file="../TreeMix.png", units="in", width = 5, height = 3.2, res=300)
-
-par(mar=c(2.5,0.5,0.2,0.2)+0.1, mgp=c(1.2,0.1,0), xpd=TRUE,tcl=NA,cex=0.7)                                
-treemix.bootstrap("mytree_1m_finalrun_1", out.file = "tmp",                 #stem of TreeMix files (as above) + number of run with highest likelihood and unique topology
-                  phylip.file = "../mytree_constree.newick",           #consensus tree in newick format (from the bootstrap procedure generated with PHYLIP)    
-                  nboot = 500, fill = TRUE,                       #nboot is the number of bootstraps used
-                  pop.color.file = "../../pop_color.txt",                     #specify colours with a tab delimited pop.color.file - first column is pop name, second the colour
-                  boot.legend.location = "topright", inset.vector=c(0,0),
-                  plotmig=FALSE, mbar=FALSE,
-                  cex=1, lwd=1.5,boot.cex=2, boot.legend.cex = 1)
-dev.off()
-
-
-#tree with 1 migration edge
-
-png(file="../TreeMix_m1.png", units="cm", width = 7, height = 9.8, res=300)
-
-par(mar=c(2.5,0.5,0.2,0.2)+0.1, mgp=c(1.2,0.1,0), xpd=TRUE,tcl=NA,cex=0.7)                                
-treemix.bootstrap("mytree_1m_finalrun_1", out.file = "tmp",                 #stem of TreeMix files (as above) + number of run with highest likelihood and unique topology
-                  phylip.file = "../mytree_constree.newick",           #consensus tree in newick format (from the bootstrap procedure generated with PHYLIP)    
-                  nboot = 500, fill = TRUE,                       #nboot is the number of bootstraps used
-                  pop.color.file = "../../pop_color.txt",                     #specify colours with a tab delimited pop.color.file - first column is pop name, second the colour
-                  boot.legend.location = "topright", 
-                  plotmig=TRUE, mbar=TRUE,
-                  cex=0.8, lwd=1.5,boot.cex=2, boot.legend.cex = 1)
-dev.off()
-
 #tree with 2 migration edges
 
 png(file="../TreeMix_m2.png", units="cm", width = 7, height = 9.8, res=300)
