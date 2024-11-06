@@ -8,7 +8,7 @@ setwd("/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/")
 folder <- file.path(path="./noRoot2_k100_bs500_m1-10_rep10/test_migrations/")                     #path to files of TreeMix replicates with different migration edges (m) to test
 test.linear = optM(folder, method = "linear", tsv="linear.txt")   #test m: produces a list of which the $out dataframe suggests optimum m based on multiple linear models
 plot_optM(test.linear, method = "linear")                         #shows changes in log likelihood for different m, and suggests optimum m as 'change points
-savePlot("noRoot_k100_bs500_m1-10_rep10/plot2_optM.png","png")  #save plot
+savePlot("noRoot2_k100_bs500_m1-10_rep10/plot_optM.png","png")  #save plot
 
 #Choose optimum number of m and continue with step 3 in the TreeMix pipeline
 
@@ -21,7 +21,7 @@ source("/faststorage/project/Coregonus/Aja/Coregonus/WGS/treemix/TreeMix_functio
 ## 1. From the final runs, compare tree likelihoods, select tree with highest likelihood, remove duplicates and retain tree(s) with unique topology. 
 #Adapted from R functions written by Zecca, Labra and Grassi (2019).
 
-setwd("/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot_k100_bs500_m1-10_rep10/final_runs/")                            #folder with all TreeMix outputs from the final runs
+setwd("/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot2_k100_bs500_m1-10_rep10/final_runs/")                            #folder with all TreeMix outputs from the final runs
 maxLL("mytree_1m_finalrun_", nt=10)                                         #first argument is stem of TreeMix output files, nt = number of runs
                                                                   #shows ML trees and highest likelihood, as well as tree(s) with unique topology. Outputs "TreeLLs.txt" into workign directory
 
