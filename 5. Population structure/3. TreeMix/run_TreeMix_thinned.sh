@@ -42,8 +42,8 @@ output="/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot2_
 mkdir ${output}
 cd ${output}
 
-sbatch -A Coregonus -t 24:00:00 --mem 42G -c 8 --job-name TreeMix_step1 --wrap \
- "sh ../Step1_TreeMix.sh ${input} 8 100 noRoot 500 consense mytree 1 20 10"
+sbatch -A Coregonus -t 12:00:00 --mem 8G -c 2 --job-name TreeMix_step1 --wrap \
+ "sh ../Step1_TreeMix.sh ${input} 2 100 noRoot 500 consense mytree 1 10 10"
 
 #Test migration edges with OptM
 #run part A of Step2+4_TreeMix.R
@@ -60,8 +60,8 @@ cd "/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot2_k100
 #mv "/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot2_k100_bs500_m1-10_rep10/final_runs/" "/faststorage/project/Coregonus/Aja/Dragonfly/TreeMix_LD-thinned/noRoot2_k100_bs500_m1-10_rep10/final_runs_m1/"
 
 #2 migration events
-sbatch -A Coregonus -t 48:00:00 --mem 25G -c 8 --job-name TreeMix_step3 --wrap \
- "sh ../Step3_TreeMix.sh ${input} 8 100 noRoot 500 2 mytree 10 mytree2_constree.newick consense"
+sbatch -A Coregonus -t 48:00:00 --mem 8G -c 2 --job-name TreeMix_step3 --wrap \
+ "sh ../Step3_TreeMix.sh ${input} 2 100 noRoot 500 2 mytree 10 mytree2_constree.newick consense"
 
 #Tree visualization + Migration stats and support
 #run part B of Step2+4_TreeMix.R
